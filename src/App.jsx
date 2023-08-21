@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <Routes className='sm:m-4 md:m-16 '>
-      <Route path='/detailPage' element={ <ImageCard/>}/>
+      <Route path='/' element={ <ImageCard/>}/>
       <Route path='/detailPage' element={ <ImageCardDetails/>}/>
     </Routes>
   )
