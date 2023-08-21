@@ -1,12 +1,13 @@
 import React from 'react'
 import './App.css'
+import ImageCard from './Components/ImageCards'
 
 function App() {
   return (
-    <div className="bg-red-300">
-      Hello
+    <div className='bg-red-700 '>
+      HELLO
     </div>
   )
 }
 
-export default App
+export default App;
