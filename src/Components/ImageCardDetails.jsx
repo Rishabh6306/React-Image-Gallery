@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import fetchDataDetails from '../utils/fetchDataDetails';
 
 function ImageCardDetails() {
   const [photo, setPhoto] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`https://api.slingacademy.com/v1/sample-data/photos/${id}`);
-        setPhoto(response.data.photo);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-  
-    fetchData();
+    fetchDataDetails(setPhoto, id);
   }, [id]);
-  
+
 
   return (
     <div>
