@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from './Image';
+import { Link } from 'react-router-dom';
 
 function ImageCard() {
     const [data, setData] = useState([]);
@@ -19,11 +20,13 @@ function ImageCard() {
     }, []);
 
     return (
-        <div className="flex">
+        <Link to="/detailPage">
+           <div className="grid gap-4 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2" >
             {data.photos && data.photos.map(photo => (
                 <Image key={photo.id} id={photo.id} url={photo.url} title={photo.title} author={photo.author} location={photo.location} category={photo.category} />
             ))}
-        </div>
+            </div>
+    </Link>
     );
 }
 
