@@ -1,14 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-function Image({id, url, title, author, location, category}) {
+function Image({ id, url, title }) {
     return (
-        <div key={id}>
-            <img src={url} alt={title} className='rounded-3xl'/>
-            {/* <p>Title: {title}</p>
-            <p>Author: {author}</p>
-            <p>Location: {location}</p>
-            <p>Category: {category}</p> */}
-        </div>
+        <Link to={`/detailPage/${id}`}>
+            <div key={id}>
+                <img src={url} alt={title} className='rounded-3xl' />
+            </div>
+        </Link>
     )
 }
 
