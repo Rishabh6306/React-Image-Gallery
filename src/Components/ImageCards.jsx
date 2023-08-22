@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Image from './Image';
 import fetchData from '../utils/fetchdata';
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from 'react-icons/ai'
 
-function ImageCard({ heading }) {
+function ImageCard({ heading, id, setPhoto }) {
     const [data, setData] = useState([]);
-    
-    
+
+
     const [offset, setOffset] = useState(0);
     const handleNextClick = () => {
         setOffset(offset + 20);
     };
-    
+
     const handlePreviousClick = () => {
         if (offset >= 20) {
             setOffset(offset - 20);
         }
     };
-    
+
     useEffect(() => {
         fetchData(setData, offset);
     }, [offset]);
@@ -29,20 +30,21 @@ function ImageCard({ heading }) {
                     <Image key={photo.id} id={photo.id} url={photo.url} title={photo.title} author={photo.author} location={photo.location} category={photo.category} />
                 ))}
             </div>
-            <div className="flex justify-center mt-4">
+
+            <div className="fixed bottom-80 top-80 flex justify-between left-2 right-2">
                 <button
                     onClick={handlePreviousClick}
                     disabled={offset === 0}
-                    className="px-4 py-2 bg-gray-300 rounded-md mr-2"
+                    className="px-4 text-2xl bg-gray-300 rounded-e-3xl mr-2"
                 >
-                    Previous
+                    <AiOutlineDoubleLeft />
                 </button>
                 <button
                     onClick={handleNextClick}
                     disabled={!data.photos || data.photos.length < 20}
-                    className="px-4 py-2 bg-gray-300 rounded-md"
+                    className="px-4 text-2xl bg-gray-300 rounded-s-3xl"
                 >
-                    Next
+                    <AiOutlineDoubleRight />
                 </button>
             </div>
         </>

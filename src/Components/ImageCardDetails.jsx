@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import fetchDataDetails from '../utils/fetchDataDetails';
 import ImageCard from './ImageCards';
-import fetchData from '../utils/fetchdata';
 
 function ImageCardDetails() {
   const [photo, setPhoto] = useState({});
@@ -12,7 +11,6 @@ function ImageCardDetails() {
     fetchDataDetails(setPhoto, id);
 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 }, [id]);
-  
 
   return (
     <>
@@ -36,7 +34,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
       <div className='my-20'>
         <h1 className='my-14 text-center text-5xl text-cyan-900'>Related Images</h1>
-        <ImageCard />
+        <ImageCard id={id} setPhoto={setPhoto}/>
       </div>
     </>
   );
