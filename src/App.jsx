@@ -6,7 +6,7 @@ import ImageCardDetails from './Components/ImageCardDetails';
 function App() {
   return (
     <Routes>
-        <Route path='/' element={<ImageCard />} />
+        <Route path='/' element={<ImageCard heading="Image Collections"/>} />
         <Route path='/detailPage/:id' element={<ImageCardDetails />} />
     </Routes>
   );
