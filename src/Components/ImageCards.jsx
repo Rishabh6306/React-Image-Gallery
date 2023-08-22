@@ -31,18 +31,18 @@ function ImageCard({ heading, id, setPhoto }) {
                 ))}
             </div>
 
-            <div className="fixed bottom-80 top-80 flex justify-between left-2 right-2">
+            <div className="fixed bottom-80 top-96 flex justify-between right-1  left-1">
                 <button
                     onClick={handlePreviousClick}
                     disabled={offset === 0}
-                    className="px-4 text-2xl bg-gray-300 rounded-e-3xl mr-2"
+                    className="px-4 text-3xl hover:bg-fuchsia-300 hover:text-2xl rounded-e-3xl mr-2"
                 >
                     <AiOutlineDoubleLeft />
                 </button>
                 <button
                     onClick={handleNextClick}
                     disabled={!data.photos || data.photos.length < 20}
-                    className="px-4 text-2xl bg-gray-300 rounded-s-3xl"
+                    className="px-4 text-3xl hover:bg-fuchsia-300 hover:text-2xl rounded-s-3xl"
                 >
                     <AiOutlineDoubleRight />
                 </button>

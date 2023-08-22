@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import fetchDataDetails from '../utils/fetchDataDetails';
 import ImageCard from './ImageCards';
+import { AiOutlineHome } from 'react-icons/ai';
+import axios from 'axios'; // Import axios
 
 function ImageCardDetails() {
   const [photo, setPhoto] = useState({});
@@ -9,14 +11,30 @@ function ImageCardDetails() {
 
   useEffect(() => {
     fetchDataDetails(setPhoto, id);
-window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-}, [id]);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [id]);
+
+  // Function to handle the download button click
+  const handleDownloadClick = async () => {
+    try {
+      const response = await axios.get(photo.url, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${photo.title}.jpg`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading photo:', error);
+    }
+  };
 
   return (
     <>
       <div className='bg-blue-900 text-white py-10 px-2 lg:p-10 rounded-2xl'>
-        <Link to="/" className="text-2xl float-left my-4 text-red-500 hover:underline">
-          Home
+        <Link to="/" className="text-3xl float-left my-4 text-red-500 hover:underline">
+          <AiOutlineHome />
         </Link>
         {Object.keys(photo).length > 0 && (
           <div>
@@ -26,6 +44,9 @@ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
               <div className='flex flex-col justify-center mt-10 ml-4 lg:ml-20'>
                 <h1 className='text-3xl lg:text-4xl xl:text-5xl tracking-wider leading-snug font-semibold '>{photo.description}</h1>
                 <p className='mt-5 text-2xl tracking-wider'>{photo.title}</p>
+                <button onClick={handleDownloadClick} className="px-4 py-3 mt-5 bg-blue-600 text-white rounded-md">
+                 Download Image
+                </button>
               </div>
             </div>
           </div>
@@ -34,7 +55,7 @@ window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
       <div className='my-20'>
         <h1 className='my-14 text-center text-5xl text-cyan-900'>Related Images</h1>
-        <ImageCard id={id} setPhoto={setPhoto}/>
+        <ImageCard id={id} setPhoto={setPhoto} />
       </div>
     </>
   );
