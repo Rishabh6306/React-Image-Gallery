@@ -18,17 +18,25 @@ function ImageCardDetails() {
   const handleDownloadClick = async () => {
     try {
       const response = await axios.get(photo.url, { responseType: 'blob' });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const blob = new Blob([response.data]);
+  
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', `${photo.title}.jpg`);
+      
+      // Append the link to the body, click it, and remove it
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+  
+      // Clean up the object URL
+      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error downloading photo:', error);
     }
   };
+  
 
   return (
     <>
@@ -39,11 +47,11 @@ function ImageCardDetails() {
         {Object.keys(photo).length > 0 && (
           <div>
             <h1 className='text-center text-yellow-600 underline decoration-dashed my-6 mt-20 sm:my-14 text-3xl md:text-5xl'>Details Page</h1>
-            <div className='flex flex-col sm:flex-row mt-1 sm:mt-14 w-full md:w-5/6'>
+            <div className='flex flex-col sm:flex-row mt-1 sm:mt-14 w-full md:w-11/12'>
               <img src={photo.url} alt={photo.title} className="custom-box-shadow sm:h-60 xl:h-96 rounded-3xl mx-4 p-1" />
               <div className='flex flex-col justify-center mt-10 ml-4 lg:ml-20'>
-                <h1 className='text-3xl lg:text-4xl xl:text-5xl tracking-wider leading-snug font-semibold '>{photo.description}</h1>
-                <p className='mt-5 text-2xl tracking-wider'>{photo.title}</p>
+                <h1 className='text-3xl lg:text-4xl tracking-wider leading-snug font-semibold '>{photo.description}</h1>
+                <p className='mt-5 text-xl tracking-wider'>{photo.title}</p>
                 <button onClick={handleDownloadClick} className="px-4 py-3 mt-5 bg-blue-600 text-white rounded-md">
                  Download Image
                 </button>
