@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import fetchDataDetails from '../utils/fetchDataDetails';
 import ImageCard from './ImageCards';
 import { AiOutlineHome } from 'react-icons/ai';
-import axios from 'axios'; // Import axios
+import axios from 'axios';
 
 function ImageCardDetails() {
   const [photo, setPhoto] = useState({});
@@ -14,29 +14,29 @@ function ImageCardDetails() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 
-  // Function to handle the download button click
   const handleDownloadClick = async () => {
     try {
-      const response = await axios.get(photo.url, { responseType: 'blob' });
+      const response = await axios.get(photo.url, { responseType: 'arraybuffer' });
       const blob = new Blob([response.data]);
-  
+
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', `${photo.title}.jpg`);
-      
-      // Append the link to the body, click it, and remove it
+      link.style.display = 'none';
+
+      // Append the link to the body and click it
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-  
-      // Clean up the object URL
+
+      // Clean up the object URL and link
       window.URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+
     } catch (error) {
       console.error('Error downloading photo:', error);
     }
   };
-  
 
   return (
     <>
@@ -53,7 +53,7 @@ function ImageCardDetails() {
                 <h1 className='text-3xl lg:text-4xl tracking-wider leading-snug font-semibold '>{photo.description}</h1>
                 <p className='mt-5 text-xl tracking-wider'>{photo.title}</p>
                 <button onClick={handleDownloadClick} className="px-4 py-3 mt-5 bg-blue-600 text-white rounded-md">
-                 Download Image
+                  Download Image
                 </button>
               </div>
             </div>
